@@ -4,10 +4,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.example</groupId>
-  <artifactId>my-spring-api</artifactId>
+  <artifactId>learningSpringBoot</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>my-spring-api</name>
+  <name>learningSpringBoot</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
