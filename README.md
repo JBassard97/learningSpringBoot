@@ -102,3 +102,68 @@ public class UserController {
     }
 }
 ```
+
+### Because all Objects become JSON, we can create a custom MessageResponse class to send a JSON String
+
+```java
+package com.example.model;
+
+public class MessageResponse {
+    private String message;
+
+    public MessageResponse(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
+```
+
+And then use it in our route:
+
+```java
+import com.example.model.MessageResponse;
+
+@RestController
+public class UserController {
+    @GetMapping("/users/{id}")
+    public MessageResponse getUserById(@PathVariable("id") Long id) {
+        String message = "Returning user with ID: " + id;
+        return new MessageResponse(message);
+    }
+}
+```
+
+And get this in the client:
+
+```json
+// http://localhost:8080/users/1234567
+
+{
+  "message": "Returning user with ID: 1234567"
+}
+```
+
+## How to control CORS
+
+### Import CrossOrigin:
+
+```java
+import org.springframework.web.bind.annotation.CrossOrigin;
+```
+
+And then use it above each route:
+
+```java
+@CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("api/users")
+    public List<String> getUsers() {
+        return Arrays.asList("John", "Jane", "Doe");
+    }
+```

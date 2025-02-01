@@ -5,11 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MyApiController {
-    @GetMapping("/")
-    public String sayWelcome() {
-        return "Welcome to Spring Boot!";
-    }
-
     @GetMapping("/hello")
     public String sayHello() {
         return "Hello World!";
