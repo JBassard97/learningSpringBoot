@@ -60,3 +60,45 @@ public class UserController {
 
 }
 ```
+
+### import RequestParam to use search parameters:
+```java
+package com.example;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@RestController
+public class UserController {
+    // Get users who are role=admin
+    // ex: localhost:8080/users/role?role=admin
+    @GetMapping("/users/role")
+    public String getUsersByRole(@RequestParam("role") String role) {
+        return "Returning users with the " + role + " role.";
+    }
+
+}
+```
+
+## Spring Boot converts all objects to JSON using Jackson
+
+### Using Spring Boot to automatically convert a List to a JSON array
+```java
+package com.example;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Arrays;
+
+@RestController
+public class UserController {
+
+    @GetMapping("/users")
+    public List<String> getUsers() {
+        return Arrays.asList("John", "Jane", "Doe");
+    }
+}
+```
