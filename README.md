@@ -167,3 +167,49 @@ And then use it above each route:
         return Arrays.asList("John", "Jane", "Doe");
     }
 ```
+
+## Integrating a front end
+
+
+Build your frontend framework of choice (ideally fit with TypeScript) with the commmand:
+
+```bash
+npm create vite@latest
+```
+
+Then edit your vite.config.ts so that it puts the output of `npm run build` into the static folder in your Spring Boot backend:
+
+```typescript
+import { defineConfig } from 'vite';
+import preact from '@preact/preset-vite';
+import path from 'path';
+
+export default defineConfig({
+  plugins: [preact()],
+  build: {
+    outDir: path.resolve(__dirname, '../src/main/resources/static'), // Output to Spring Boot static directory
+    emptyOutDir: true, // Clears old files before building
+  },
+});
+```
+
+Create a WebController.java in your controller directory and add this so that it always serves the built index.html:
+
+```java
+package com.example.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class WebController {
+
+    // Catch-all for frontend routes
+    @RequestMapping(value = "/{path:[^\\.]*}")
+    public String forwardToIndex() {
+        return "forward:/index.html";
+    }
+}
+```
+
+Then build the client app, run the Spring Boot server, and view in the browser. You can also take advantage of your client-side routing of choice, and can communicate with the backed using routes starting in "/api/"
